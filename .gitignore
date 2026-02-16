@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Project Secrets
+.env
+.env.bak
+tokens/
+*.pid
+credentials.json
+
+# IDE
+.vscode/
+.idea/
+.gemini/
+.agent/
+brain/
