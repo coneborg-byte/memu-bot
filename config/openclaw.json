@@ -1,0 +1,71 @@
+{
+  "models": {
+    "providers": {
+      "ollama-local": {
+        "baseUrl": "http://host.docker.internal:11434/v1",
+        "api": "ollama",
+        "apiKey": "ollama",
+        "models": [
+          {
+            "id": "llama3.1:8b",
+            "name": "Llama 3.1 8B",
+            "contextWindow": 16384
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "ollama-local/llama3.1:8b"
+      },
+      "models": {
+        "ollama-local/llama3.1:8b": {
+          "streaming": true,
+          "params": {
+            "num_ctx": 8192,
+            "temperature": 0.7
+          }
+        }
+      },
+      "contextTokens": 16384,
+      "memorySearch": {
+        "enabled": false
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "open",
+      "botToken": "8342295225:AAHliyXkTONfHYYx7WIwKRfCuSu8rXT343I",
+      "allowFrom": [
+        "*"
+      ],
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "bind": "lan",
+    "controlUi": {
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.2.18",
+    "lastTouchedAt": "2026-02-18T15:08:57.376Z"
+  }
+}

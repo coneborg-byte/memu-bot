@@ -5,11 +5,11 @@ import os
 import json
 import glob
 
-TOKEN_DIR = 'tokens'
+TOKEN_DIR = os.path.join('tokens', 'yahoo')
 
 def get_yahoo_auth(account_id):
     """Retrieves Yahoo credentials from local tokens directory."""
-    token_path = os.path.join(TOKEN_DIR, f'yahoo_{account_id}.json')
+    token_path = os.path.join(TOKEN_DIR, f'{account_id}.json')
     if os.path.exists(token_path):
         with open(token_path, 'r') as f:
             return json.load(f)
@@ -19,7 +19,7 @@ def save_yahoo_auth(account_id, email_addr, app_password):
     """Saves Yahoo credentials to local tokens directory."""
     if not os.path.exists(TOKEN_DIR):
         os.makedirs(TOKEN_DIR)
-    token_path = os.path.join(TOKEN_DIR, f'yahoo_{account_id}.json')
+    token_path = os.path.join(TOKEN_DIR, f'{account_id}.json')
     with open(token_path, 'w') as f:
         json.dump({'email': email_addr, 'password': app_password}, f)
 
@@ -27,8 +27,8 @@ def list_yahoo_accounts():
     """Lists all Yahoo account IDs that have a stored token."""
     if not os.path.exists(TOKEN_DIR):
         return []
-    files = glob.glob(os.path.join(TOKEN_DIR, "yahoo_*.json"))
-    return [os.path.basename(f).replace("yahoo_", "").replace(".json", "") for f in files]
+    files = glob.glob(os.path.join(TOKEN_DIR, "*.json"))
+    return [os.path.basename(f).replace(".json", "") for f in files]
 
 def fetch_recent_emails(account_id, max_results=5):
     """Fetches recent emails from Yahoo inbox."""
@@ -113,3 +113,20 @@ def fetch_recent_emails(account_id, max_results=5):
     except Exception as e:
         print(f"Error fetching Yahoo emails for {account_id}: {e}")
         return []
+
+def delete_email(account_id, message_id):
+    """Marks a Yahoo email as deleted and expunges."""
+    auth = get_yahoo_auth(account_id)
+    if not auth: return False
+    try:
+        mail = imaplib.IMAP4_SSL("imap.mail.yahoo.com")
+        mail.login(auth['email'], auth['password'])
+        mail.select("inbox")
+        # message_id is the string UID or index
+        mail.store(message_id, '+FLAGS', '\\Deleted')
+        mail.expunge()
+        mail.logout()
+        return True
+    except Exception as e:
+        print(f"Error deleting Yahoo email: {e}")
+        return False

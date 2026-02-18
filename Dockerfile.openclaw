@@ -1,0 +1,40 @@
+# Build OpenClaw from Source (Based on Official Dockerfile)
+FROM node:22-bookworm
+
+# 1. Install system utilities and Bun
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    make \
+    g++ \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
+
+RUN corepack enable
+
+# 2. Clone OpenClaw Repository inside the container for "start from scratch" security
+WORKDIR /app
+RUN git clone https://github.com/openclaw/openclaw.git .
+
+# 3. Install Dependencies (Using their pnpm frozen lockfile logic if possible, 
+# but since we just cloned, we might need a fresh install)
+RUN pnpm install --no-frozen-lockfile
+
+# 4. Build Project
+RUN pnpm build
+RUN pnpm ui:build
+
+# 5. Environment
+ENV NODE_ENV=production
+ENV OPENCLAW_PREFER_PNPM=1
+
+# 6. Expose Port
+EXPOSE 18789
+
+# 7. Start Command (Gateway mode)
+# Binds to 0.0.0.0 (lan) so it's accessible from host via mapping, 
+# but keep it jailed in the network.
+CMD ["node", "openclaw.mjs", "gateway", "--allow-unconfigured", "--bind", "lan"]

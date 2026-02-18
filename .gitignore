@@ -9,10 +9,24 @@ ENV/
 
 # Project Secrets
 .env
+.env.*
 .env.bak
 tokens/
-*.pid
 credentials.json
+
+# Databases (backed up separately to Drive)
+*.sqlite
+*.sqlite3
+*.db
+
+# Local backups (Drive handles these)
+backups/
+
+# Memory state files (runtime only)
+memory/email_scan_state.json
+memory/backup-state.json
+memory/security-findings.json
+memory/heartbeat-state.json
 
 # IDE
 .vscode/
@@ -20,3 +34,11 @@ credentials.json
 .gemini/
 .agent/
 brain/
+
+# OpenClaw runtime (not for version control)
+.openclaw/
+config/workspace/
+config/agents/main/sessions/
+config/logs/
+config/telegram/
+config/update-check.json

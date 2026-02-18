@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "urgent-email-scan",
+      "name": "Urgent Email Scanner",
+      "description": "Scans Gmail every 30 minutes during waking hours and alerts on urgent emails.",
+      "schedule": "*/30 8-22 * * *",
+      "enabled": true,
+      "agent": "main",
+      "session": "cron:urgent-email",
+      "prompt": "Run the urgent email skill: exec `python /root/.openclaw/workspace/skills/urgent-email/scanner.py` and report the output to Nev. If urgent emails are found, summarise them clearly. If the output is HEARTBEAT_OK, stay silent.",
+      "state": {
+        "scheduleErrorCount": 1,
+        "lastError": "schedule error: TypeError: Cannot read properties of undefined (reading 'trim')"
+      }
+    },
+    {
+      "id": "daily-briefing",
+      "name": "Daily Morning Briefing",
+      "description": "Delivers a consolidated morning briefing to Nev at 7am GMT every day.",
+      "schedule": "0 7 * * *",
+      "enabled": true,
+      "agent": "main",
+      "session": "cron:daily-briefing",
+      "prompt": "Run the daily briefing: exec `python /root/.openclaw/workspace/skills/daily-briefing/briefing.py` and send the full output to Nev on Telegram as a single message. Do not summarise or shorten it — send it exactly as generated.",
+      "state": {
+        "scheduleErrorCount": 1,
+        "lastError": "schedule error: TypeError: Cannot read properties of undefined (reading 'trim')"
+      }
+    },
+    {
+      "id": "nightly-security-audit",
+      "name": "Nightly Security Audit",
+      "description": "Runs a full 4-perspective security audit of the codebase at 3:30am GMT nightly.",
+      "schedule": "30 3 * * *",
+      "enabled": true,
+      "agent": "main",
+      "session": "cron:security-audit",
+      "prompt": "Run the nightly security audit: exec `python /root/.openclaw/workspace/skills/security/audit.py` and deliver the findings to Nev on Telegram. Any CRITICAL findings must be flagged immediately and prominently. Group other findings by perspective. Keep the message concise — numbered list format.",
+      "state": {
+        "scheduleErrorCount": 1,
+        "lastError": "schedule error: TypeError: Cannot read properties of undefined (reading 'trim')"
+      }
+    },
+    {
+      "id": "weekly-gateway-check",
+      "name": "Weekly Gateway Security Check",
+      "description": "Verifies gateway security config every Monday at 04:00 GMT.",
+      "schedule": "0 4 * * 1",
+      "enabled": true,
+      "agent": "main",
+      "session": "cron:gateway-check",
+      "prompt": "Run a gateway security verification: exec `python /root/.openclaw/workspace/skills/security/audit.py --perspective operational` and check that: (1) gateway is bound to localhost or LAN only, (2) auth is enabled, (3) no .env files are committed to git. Report findings to Nev. If all clear, send a single line: 'Gateway check: all clear 🛡️'",
+      "state": {
+        "scheduleErrorCount": 1,
+        "lastError": "schedule error: TypeError: Cannot read properties of undefined (reading 'trim')"
+      }
+    }
+  ]
+}

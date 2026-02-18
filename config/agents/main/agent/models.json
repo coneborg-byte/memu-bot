@@ -1,0 +1,27 @@
+{
+  "providers": {
+    "ollama-local": {
+      "baseUrl": "http://host.docker.internal:11434/v1",
+      "apiKey": "ollama",
+      "api": "ollama",
+      "models": [
+        {
+          "id": "llama3.1:8b",
+          "name": "Llama 3.1 8B",
+          "contextWindow": 16384,
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "maxTokens": 8192
+        }
+      ]
+    }
+  }
+}
