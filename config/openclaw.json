@@ -1,6 +1,32 @@
 {
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/openrouter/auto",
+        "fallbacks": [
+          "ollama-local/llama3.1:8b"
+        ]
+      },
+      "contextTokens": 1000000,
+      "memorySearch": {
+        "enabled": true
+      }
+    }
+  },
   "models": {
     "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "api": "openai-responses",
+        "apiKey": "${OPENROUTER_API_KEY}",
+        "models": [
+          {
+            "id": "openrouter/auto",
+            "name": "openrouter/auto",
+            "contextWindow": 1000000
+          }
+        ]
+      },
       "ollama-local": {
         "baseUrl": "http://host.docker.internal:11434/v1",
         "api": "ollama",
@@ -14,30 +40,6 @@
         ]
       }
     }
-  },
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "ollama-local/llama3.1:8b"
-      },
-      "models": {
-        "ollama-local/llama3.1:8b": {
-          "streaming": true,
-          "params": {
-            "num_ctx": 8192,
-            "temperature": 0.7
-          }
-        }
-      },
-      "contextTokens": 16384,
-      "memorySearch": {
-        "enabled": false
-      }
-    }
-  },
-  "commands": {
-    "native": "auto",
-    "nativeSkills": "auto"
   },
   "channels": {
     "telegram": {
@@ -53,6 +55,11 @@
   },
   "gateway": {
     "bind": "lan",
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "morpheus-secure-token-2026"
+    },
     "controlUi": {
       "dangerouslyDisableDeviceAuth": true
     }
@@ -63,9 +70,5 @@
         "enabled": true
       }
     }
-  },
-  "meta": {
-    "lastTouchedVersion": "2026.2.18",
-    "lastTouchedAt": "2026-02-18T15:08:57.376Z"
   }
 }

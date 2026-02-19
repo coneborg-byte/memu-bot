@@ -15,7 +15,10 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive.file'   # upload files the app creates
 ]
 
-TOKEN_DIR = os.path.join('tokens', 'gmail')
+# Handle absolute paths for Docker/Cron execution
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+TOKEN_DIR = os.path.join(ROOT_DIR, 'tokens', 'gmail')
+CREDENTIALS_FILE = os.path.join(ROOT_DIR, 'credentials.json')
 
 def get_google_service(service_name, version, account_id='primary'):
     """Builds and returns the requested Google service object for a specific account."""
@@ -42,7 +45,7 @@ def get_google_service(service_name, version, account_id='primary'):
         
         if not creds:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                CREDENTIALS_FILE, SCOPES)
             creds = flow.run_local_server(port=0)
             
         with open(token_path, 'w') as token:
@@ -228,3 +231,8 @@ if __name__ == '__main__':
         events = fetch_upcoming_events(acc, 5)
         for event in events:
             print(f"{event['start']} - {event['summary']}")
+
+        print("\nTesting Drive...")
+        files = fetch_recent_files(acc, 5)
+        for f in files:
+            print(f"[{f['type']}] {f['name']} (Modified: {f['modified']})")

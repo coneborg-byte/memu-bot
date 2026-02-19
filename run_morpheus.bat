@@ -1,12 +1,20 @@
 @echo off
-title Morpheus Telegram Bot
-echo Cleaning up existing Morpheus instances...
-:: Taskkill will find any python process running morpheus_bot.py and end it
-powershell -Command "Get-Process python | Where-Object {$_.CommandLine -like '*morpheus_bot.py*'} | Stop-Process -Force" 2>nul
+title Morpheus Control - DNS
+echo.
+echo ========================================================
+echo     MORPHEUS (OpenClaw) Control Loop
+echo ========================================================
+echo.
 
-:: Small delay to ensure memory is cleared
-timeout /t 2 /nobreak >nul
+echo [1/2] Waking up OpenClaw Docker...
+docker start openclaw >nul 2>&1
 
-echo Starting Morpheus (memU bot consolidated)...
-"C:\Users\nvllm\AppData\Local\Programs\Python\Python312\python.exe" morpheus_bot.py
-pause
+echo [2/2] Starting local Mission Control...
+start "Mission Control" /min "C:\Users\nvllm\AppData\Local\Programs\Python\Python312\python.exe" mission_control.py
+
+echo.
+echo Morpheus is now online. 🦾
+echo This window will close in 5 seconds...
+timeout /t 5 >nul
+exit
+
