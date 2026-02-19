@@ -7,10 +7,16 @@ env/
 venv/
 ENV/
 
+# Backups and Temporary files
+*.bak
+*.bak.*
+*~
+*.swp
+*.tmp
+
 # Project Secrets
 .env
 .env.*
-.env.bak
 tokens/
 credentials.json
 
