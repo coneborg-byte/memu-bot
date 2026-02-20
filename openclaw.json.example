@@ -1,0 +1,117 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/openrouter/auto",
+        "fallbacks": [
+          "ollama-local/llama3.1:8b"
+        ]
+      },
+      "contextTokens": 1000000,
+      "memorySearch": {
+        "enabled": true
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "api": "openai-responses",
+        "apiKey": "${OPENROUTER_API_KEY}",
+        "models": [
+          {
+            "id": "openrouter/auto",
+            "name": "openrouter/auto",
+            "contextWindow": 1000000
+          }
+        ]
+      },
+      "ollama-local": {
+        "baseUrl": "http://host.docker.internal:11434/v1",
+        "api": "openai-responses",
+        "apiKey": "ollama",
+        "models": [
+          {
+            "id": "llama3.1:8b",
+            "name": "Llama 3.1 8B",
+            "contextWindow": 16384
+          }
+        ]
+      },
+      "anthropic": {
+        "baseUrl": "http://host.docker.internal:11434/v1",
+        "api": "openai-responses",
+        "apiKey": "ollama",
+        "models": [
+          {
+            "id": "llama3.1:8b",
+            "name": "claude-opus-4-6",
+            "contextWindow": 16384
+          }
+        ]
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "open",
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "allowFrom": [
+        "*"
+      ],
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "bind": "lan",
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "morpheus-secure-token-2026"
+    },
+    "controlUi": {
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "/root/.openclaw/skills"
+      ],
+      "watch": true
+    },
+    "entries": {
+      "urgent-email": {
+        "enabled": true
+      },
+      "daily-briefing": {
+        "enabled": true
+      },
+      "git-sync": {
+        "enabled": true
+      },
+      "db-backup": {
+        "enabled": true
+      },
+      "security": {
+        "enabled": true
+      },
+      "knowledge-base": {
+        "enabled": true
+      },
+      "messaging": {
+        "enabled": true
+      }
+    }
+  }
+}
