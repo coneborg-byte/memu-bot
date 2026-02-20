@@ -37,10 +37,13 @@ def process_pending_missions():
                             logging.info(f"✅ Research archived: {data.get('title')}")
                         
                         elif action == "scout_x":
-                            # This REQUIRES Antigravity (Cloud Muscles), so we leave it for the AI turn
-                            # But we can update the status to 'notified_cloud'
-                            logging.info(f"📡 Scout Mission Waiting for Antigravity: {data.get('topic')}")
-                            continue 
+                            # This REQUIRES Antigravity (Cloud Muscles)
+                            if mission.get("status") == "pending":
+                                mission["status"] = "notified_cloud"
+                                logging.info(f"📡 [HANDOFF] Scout Mission for {data.get('topic')} is now WAITING for Antigravity.")
+                                # Morpheus can now wait for a file named {mission_id}_result.json
+                            else:
+                                continue 
                         
                         # Save updated status
                         f.seek(0)

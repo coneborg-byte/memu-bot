@@ -2,38 +2,39 @@
 name: urgent-email
 description: >
   Urgent email detection. Use when: user asks to check emails, asks if anything important came in,
-  or when running a scheduled email scan. Scans Gmail for urgent messages, classifies them with AI,
-  and reports back. Also handles feedback ("that wasn't urgent" / "that was urgent") to improve
-  the noise/urgent sender lists over time.
+  or when running a scheduled email scan. Scans all linked accounts (Gmail and Yahoo) for urgent
+  messages, classifies them with AI, and reports back. Also handles feedback ("that wasn't urgent"
+  / "that was urgent") to improve the noise/urgent sender lists over time.
 ---
 
 # Urgent Email Skill
 
 ## What This Does
 
-Scans Gmail for urgent emails, filters known noise senders, and reports anything that needs attention.
-Learns from feedback over time.
+Scans all linked Gmail and Yahoo accounts for urgent emails, filters known noise senders,
+and reports anything that needs attention. Learns from feedback over time.
 
 ## How to Use It
 
 Run the scanner:
 ```
-exec: python /root/.openclaw/workspace/skills/urgent-email/scanner.py
+exec: python3 /root/.openclaw/skills/urgent-email/scanner.py
 ```
 
 To mark a sender as noise (after user says "that wasn't urgent"):
 ```
-exec: python /root/.openclaw/workspace/skills/urgent-email/scanner.py --mark-noise "sender@example.com"
+exec: python3 /root/.openclaw/skills/urgent-email/scanner.py --mark-noise "sender@example.com"
 ```
 
 To mark a sender as always urgent:
 ```
-exec: python /root/.openclaw/workspace/skills/urgent-email/scanner.py --mark-urgent "sender@example.com"
+exec: python3 /root/.openclaw/skills/urgent-email/scanner.py --mark-urgent "sender@example.com"
 ```
 
 ## Output Format
 
 If urgent emails found, report them clearly:
+- Which account it came from (e.g. [gmail:primary], [yahoo:nvllm])
 - Who it's from
 - Subject line
 - One-line snippet

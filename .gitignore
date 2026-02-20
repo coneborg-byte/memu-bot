@@ -19,6 +19,7 @@ ENV/
 .env.*
 tokens/
 credentials.json
+openclaw.json
 
 # Databases (backed up separately to Drive)
 *.sqlite

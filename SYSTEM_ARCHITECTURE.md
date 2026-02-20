@@ -30,7 +30,16 @@
 
 ---
 
-## 2. All Active Workflows
+### 📚 Knowledge Base (The Memory)
+- **Architecture**: Ingest + Embed -> SQLite + Vectors (FAISS).
+- **Social Connectors**: 
+    - **YouTube**: Transcript extraction via `yt-dlp`.
+    - **X / Twitter**: Hybrid scouting (Cloud scraping -> Local vectorization).
+    - **PDF / Articles**: Deep parsing and semantic chunking.
+- **Retrieval**: High-speed semantic search using `all-MiniLM-L6-v2`.
+- **UX**: "Ask in Plain English" via Telegram topics.
+
+## 2. Active Workflows (Loops)
 
 ### 📡 The "Scout" Loop (X Ingestion)
 1.  **You (Telegram)**: `/scout Llama 4 News`

@@ -1,5 +1,8 @@
 {
     "ollama-local": {
         "apiKey": "ollama"
+    },
+    "anthropic": {
+        "apiKey": "ollama"
     }
 }

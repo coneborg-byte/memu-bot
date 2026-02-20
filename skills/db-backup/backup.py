@@ -100,7 +100,7 @@ def upload_to_drive(archive_path: str, manifest: dict) -> bool:
     """Upload archive to Google Drive. Returns True on success."""
     sys.path.insert(0, WORKSPACE)
     try:
-        from gmail_bridge import upload_to_drive as drive_upload
+        from mail_bridge import upload_to_drive as drive_upload
         result = drive_upload(archive_path, DRIVE_FOLDER)
         return result
     except ImportError:

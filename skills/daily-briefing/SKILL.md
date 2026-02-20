@@ -1,9 +1,10 @@
 ---
 name: daily-briefing
 description: >
-  Daily morning briefing. Use when: user asks for their daily briefing, morning summary, 
-  what's on today, or when the 7am cron fires. Pulls today's calendar events and recent 
-  emails, then delivers a single consolidated morning message to Nev.
+  Daily morning briefing. Use when: user asks for their daily briefing, morning summary,
+  what's on today, or when the 7am cron fires. Pulls today's calendar events and recent
+  emails from all linked accounts (Gmail and Yahoo), then delivers a single consolidated
+  morning message to Nev.
 ---
 
 # Daily Briefing Skill
@@ -12,7 +13,7 @@ description: >
 
 Generates a single consolidated morning briefing covering:
 1. Today's calendar events (with context)
-2. Urgent/unread emails from the last 24 hours
+2. Urgent/unread emails from all accounts (Gmail + Yahoo) in the last 24 hours
 3. Pending items from the missions/ folder
 4. A one-line weather note (if relevant)
 
@@ -20,7 +21,7 @@ Generates a single consolidated morning briefing covering:
 
 Run the briefing:
 ```
-exec: python /root/.openclaw/workspace/skills/daily-briefing/briefing.py
+exec: python3 /root/.openclaw/skills/daily-briefing/briefing.py
 ```
 
 ## Output Format
@@ -35,8 +36,8 @@ Deliver as a single Telegram message. Structure:
 • [time] — [event title]
 
 📧 EMAILS (last 24h)
-• [sender]: [subject]
-• [sender]: [subject]
+• [account] [sender]: [subject]
+• [account] [sender]: [subject]
 
 📋 PENDING
 • [any missions/ items waiting]

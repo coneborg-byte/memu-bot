@@ -2,3 +2,14 @@ python-telegram-bot
 requests
 python-dotenv
 psutil
+yt-dlp
+youtube-transcript-api
+googlesearch-python
+beautifulsoup4
+sentence-transformers
+faiss-cpu
+numpy
+pypdf
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client

@@ -3,7 +3,7 @@
 Urgent Email Scanner - Morpheus AI
 Skill: urgent-email
 
-Scans Gmail for urgent emails during waking hours.
+Scans ALL linked Gmail and Yahoo accounts for urgent emails during waking hours.
 Uses local Ollama (llama3.1:8b) to classify urgency.
 Learns from feedback via noise_senders.json and urgent_senders.json.
 
@@ -27,9 +27,8 @@ WORKSPACE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 STATE_FILE  = os.path.join(WORKSPACE, "memory", "email_scan_state.json")
 NOISE_FILE  = os.path.join(WORKSPACE, "memory", "noise_senders.json")
 URGENT_FILE = os.path.join(WORKSPACE, "memory", "urgent_senders.json")
-TOKENS_DIR  = os.path.join(WORKSPACE, "tokens", "gmail")
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://host.docker.internal:11434/api/generate")
 MODEL      = "llama3.1:8b"
 
 WAKING_START = 8   # 08:00 GMT
@@ -105,16 +104,16 @@ def scan():
         print("HEARTBEAT_OK (outside waking hours)")
         return
 
-    # Import gmail_bridge from workspace root
+    # Import mail_bridge from workspace root
     sys.path.insert(0, WORKSPACE)
-    from gmail_bridge import fetch_recent_emails
+    from mail_bridge import fetch_all_recent_emails
 
     state        = load_json(STATE_FILE, {"seen_ids": []})
     noise_list   = load_json(NOISE_FILE, [])
     urgent_list  = load_json(URGENT_FILE, [])
 
-    print(f"Scanning Gmail at {datetime.datetime.utcnow().strftime('%H:%M UTC')}...")
-    emails = fetch_recent_emails("primary", max_results=15)
+    print(f"Scanning all accounts at {datetime.datetime.utcnow().strftime('%H:%M UTC')}...")
+    emails = fetch_all_recent_emails(max_results_per_account=10)
 
     urgent_found = []
 
@@ -123,13 +122,18 @@ def scan():
         sender  = email.get("from", "")
         subject = email.get("subject", "")
         snippet = email.get("snippet", "")
+        acc_id  = email.get("account", "unknown")
+        acc_type = email.get("type", "unknown")
 
-        if msg_id in state["seen_ids"]:
+        # Global unique ID check
+        unique_id = f"{acc_type}_{acc_id}_{msg_id}"
+
+        if unique_id in state["seen_ids"]:
             continue
 
-        # Mark as seen immediately
-        state["seen_ids"].append(msg_id)
-        state["seen_ids"] = state["seen_ids"][-500:]  # cap size
+        # Mark as seen
+        state["seen_ids"].append(unique_id)
+        state["seen_ids"] = state["seen_ids"][-1000:]  # cap size
 
         if is_noise(sender, noise_list):
             print(f"  [noise]  {sender[:50]}")
@@ -142,7 +146,7 @@ def scan():
 
         is_urg = classify(subject, snippet, sender)
         label  = "URGENT" if is_urg else "ok"
-        print(f"  [{label}] {sender[:50]}: {subject[:60]}")
+        print(f"  [{label}] ({acc_type}:{acc_id}) {sender[:40]}: {subject[:50]}")
         if is_urg:
             urgent_found.append(email)
 
@@ -151,6 +155,7 @@ def scan():
     if urgent_found:
         print("\n--- URGENT EMAILS ---")
         for e in urgent_found:
+            print(f"Account: [{e['type']}:{e['account']}]")
             print(f"From:    {e['from']}")
             print(f"Subject: {e['subject']}")
             print(f"Preview: {e['snippet'][:120]}")
