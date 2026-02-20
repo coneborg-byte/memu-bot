@@ -62,14 +62,14 @@
       "prompt": "Run the database backup: exec `python3 /root/.openclaw/skills/db-backup/backup.py` and check the result. If backup succeeded, stay silent. If backup FAILED for any reason, alert Nev immediately with the error and which database failed."
     },
     {
-      "id": "daily-update-check",
-      "name": "Daily OpenClaw Update Check",
-      "description": "Checks for OpenClaw updates every morning at 4:30 AM.",
+      "id": "daily-auto-update",
+      "name": "Daily OpenClaw Auto-Update",
+      "description": "Automatically checks for and applies OpenClaw updates every morning at 4:30 AM.",
       "schedule": "30 4 * * *",
       "enabled": true,
       "agent": "main",
-      "session": "cron:update-check",
-      "prompt": "Run an update check: exec `openclaw update check` and report to Nev if a major update is available. If everything is up to date, stay silent."
+      "session": "cron:auto-update",
+      "prompt": "Run an auto-update: exec `node /app/openclaw.mjs update` and check the result. If the version changed (check 'Before' vs 'After' in output), tell Nev 'OpenClaw has been updated to the latest version! 🎡'. If it's already up to date, stay silent."
     }
   ]
 }
