@@ -21,17 +21,17 @@ description: >
 
 Run a backup:
 ```
-exec: python /root/.openclaw/workspace/skills/db-backup/backup.py
+exec: python3 /root/.openclaw/skills/db-backup/backup.py
 ```
 
 List available backups:
 ```
-exec: python /root/.openclaw/workspace/skills/db-backup/backup.py --list
+exec: python3 /root/.openclaw/skills/db-backup/backup.py --list
 ```
 
 Restore a specific backup:
 ```
-exec: python /root/.openclaw/workspace/skills/db-backup/backup.py --restore [backup-filename]
+exec: python3 /root/.openclaw/skills/db-backup/backup.py --restore [backup-filename]
 ```
 
 ## Failure Handling

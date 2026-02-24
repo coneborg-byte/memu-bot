@@ -21,12 +21,12 @@ description: >
 
 Run a sync:
 ```
-exec: python /root/.openclaw/workspace/skills/git-sync/sync.py
+exec: python3 /root/.openclaw/skills/git-sync/sync.py
 ```
 
 Check status only (no commit):
 ```
-exec: python /root/.openclaw/workspace/skills/git-sync/sync.py --status
+exec: python3 /root/.openclaw/skills/git-sync/sync.py --status
 ```
 
 ## Conflict Handling

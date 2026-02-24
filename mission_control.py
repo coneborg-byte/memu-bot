@@ -1,50 +1,66 @@
 import os
 import json
 import time
-import datetime
-import requests
 import logging
 
 # Configuration
-MISSION_DIR = "missions"
+MISSION_DIR = os.environ.get("MISSION_CONTROL_MISSIONS_DIR", "missions")
 LIBRARY_DIR = "library"
+# Use host.docker.internal if we suspect it might run in a container,
+# but localhost is usually fine for a host-resident script.
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "llama3.1:8b"
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - MISSION_CONTROL - %(message)s')
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - MISSION_CONTROL - %(message)s',
+    handlers=[
+        logging.FileHandler(os.path.join("logs", "mission_control.log")),
+        logging.StreamHandler()
+    ]
+)
+
 
 def process_pending_missions():
     if not os.path.exists(MISSION_DIR):
-        return
+        try:
+            os.makedirs(MISSION_DIR)
+        except Exception as e:
+            logging.error(f"Could not create mission directory: {e}")
+            return
 
     for filename in os.listdir(MISSION_DIR):
         if filename.endswith(".json"):
             filepath = os.path.join(MISSION_DIR, filename)
             try:
+                # Wait for file write to complete
+                time.sleep(0.5)
+
                 with open(filepath, "r+", encoding="utf-8") as f:
-                    mission = json.load(f)
-                    
+                    try:
+                        mission = json.load(f)
+                    except json.JSONDecodeError:
+                        logging.warning(f"⚠️ Partial JSON in {filename}, skipping...")
+                        continue
+
                     if mission.get("status") == "pending":
                         action = mission.get("action")
                         data = mission.get("data", {})
-                        
+
                         logging.info(f"🚀 Processing Mission: {action}...")
-                        
+
                         # Local Autonomous Logic
                         if action == "save_research":
-                            # This is already handled by Morpheus, we just mark it complete
                             mission["status"] = "completed"
                             logging.info(f"✅ Research archived: {data.get('title')}")
-                        
+
                         elif action == "scout_x":
-                            # This REQUIRES Antigravity (Cloud Muscles)
                             if mission.get("status") == "pending":
                                 mission["status"] = "notified_cloud"
-                                logging.info(f"📡 [HANDOFF] Scout Mission for {data.get('topic')} is now WAITING for Antigravity.")
-                                # Morpheus can now wait for a file named {mission_id}_result.json
-                            else:
-                                continue 
-                        
+                                msg = f"📡 [HANDOFF] Scout triggered for '{data.get('topic')}'"
+                                logging.info(msg)
+
                         # Save updated status
                         f.seek(0)
                         json.dump(mission, f, indent=2)
@@ -52,8 +68,19 @@ def process_pending_missions():
             except Exception as e:
                 logging.error(f"Error processing {filename}: {e}")
 
+
 if __name__ == "__main__":
-    logging.info("🦾 Mission Control Local Agent is online and watching missions/...")
+    # Ensure logs directory exists
+    os.makedirs("logs", exist_ok=True)
+
+    logging.info("🦾 Mission Control initializing...")
+
+    # Wait for containers to spike and settle
+    logging.info("⏳ Waiting 15 seconds for system stabilization...")
+    time.sleep(15)
+
+    logging.info("🦾 Mission Control is online and watching missions/...")
     while True:
         process_pending_missions()
-        time.sleep(10) # check every 10 seconds
+        time.sleep(5)  # responsive 5s loop
+

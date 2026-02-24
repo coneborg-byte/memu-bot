@@ -24,17 +24,22 @@ Critical findings alert immediately. Others batch into the nightly report.
 
 Run the full audit:
 ```
-exec: python /root/.openclaw/workspace/skills/security/audit.py
+exec: python3 /root/.openclaw/skills/security/audit.py
 ```
 
 Run a specific perspective:
 ```
-exec: python /root/.openclaw/workspace/skills/security/audit.py --perspective offensive
+exec: python3 /root/.openclaw/skills/security/audit.py --perspective offensive
 ```
 
 Get details on a finding:
 ```
-exec: python /root/.openclaw/workspace/skills/security/audit.py --finding 3
+exec: python3 /root/.openclaw/skills/security/audit.py --finding 3
+```
+
+Run active hardening (Self-Healing):
+```
+exec: python3 /root/.openclaw/skills/security/harden.py
 ```
 
 ## Prompt Injection Defence

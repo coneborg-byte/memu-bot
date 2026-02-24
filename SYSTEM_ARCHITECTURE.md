@@ -67,12 +67,13 @@
 
 ---
 
-## 3. The Current Friction Point
-- **The Gap**: Morpheus (Local) and Antigravity (Cloud) are disconnected unless you bridge them manually.
-- **The Symptom**: Missions sent on Telegram accumulate in the `missions/` folder but do not execute until you come to the laptop and active the Antigravity session.
-- **The Decision**: 
-    1.  **Accept the "Sync" Model**: Treat Antigravity as a "Batch Processor" you run once a day.
-    2.  **Install Local Muscles**: Give Morpheus his own local browser automation (Playwright) so he doesn't need Antigravity for X Scouting. (Note: This is harder to maintain and requires proxy/login management).
+## 3. The Portal Protocol (Permanent Security Model)
+- **Constraint**: Morpheus remains in a permanent Docker sandbox (v2026.2.22). Direct host execution is VETOED.
+- **Portals**: Controlled access to the host is limited to specific bind-mounted directories:
+    - `/CRM_Workspace` -> Secure contact and interaction storage.
+- **API First**: Communication with external services (Gmail, Calendar) is moved to OAuth-scoped API calls, reducing reliance on local system utilities.
+- **Human-in-the-Loop (HITL)**: Any write-action outside the sandbox requires a "Nev Approved" confirmation.
+- **Localhost Locking**: All web-facing services are strictly bound to `127.0.0.1`.
 
 ---
 

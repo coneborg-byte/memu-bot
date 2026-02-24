@@ -1,25 +1,38 @@
 # 📋 Morpheus — Remaining Roadmap
 
-Status: **Phase 1 Complete (The Nervous System)**
-Next Focus: **Phase 2 (The Intelligence Layer)**
+Status: **Phase 1 COMPLETE (The Nervous System is Online)** 🦾
+Current Focus: **Phase 2 (Deep Intelligence & Personal CRM)**
 
 ---
 
-## 🏗️ Parked / High Priority
-- [ ] **Personal CRM (Prompt #1)**: Build SQLite logic to track contacts, interactions, and "Last Seen" dates. Allow briefings on specific people.
-- [ ] **Deep Knowledge Base (RAG)**: Optimise vector search. Feed it with your past project notes, library PDFs, and exported chat history.
+## 🏗️ High Priority - Phase 2 (Berman's Blueprint)
+- [x] **Personal CRM (Automated)**: Build SQLite logic to track contacts, interactions, and "Last Seen" dates from chat logs/Gmail.
+- [x] **The Council Integration**: Fully wire the specialized advisors (Risk, Security, Business) into the decision loop.
+- [ ] **Vision Integration**: Deploy a vision model (Lava/Moondream) to allow Morpheus to extract info from photos.
+- [ ] **RAG Optimization**: Refine local vector search (FAISS) for the Knowledge Base.
 
-## 🚀 Future Skills (From the Video)
-- [ ] **Intelligence Briefings (Prompt #7)**: Automated web research on specific topics (AI trends, competitors) delivered weekly.
-- [ ] **Content Engine (Prompt #8)**: Pipeline for capturing ideas, drafting outlines, and tracking production (if relevant to your workflow).
-- [ ] **Financial Health (Prompt #9)**: Integration with earnings reports or portfolio tracking (needs data source).
-- [ ] **Health & Food Journal (Prompt #10)**: Simple Telegram logging skill for nutrition/wellness tracking.
+## 🚀 Future Modules
+- [ ] **Autonomous Scout**: Extend `mission_control.py` to handle 10+ concurrent research tasks without freezing.
+- [ ] **Content Engine**: Capture ideas via Telegram and draft outlines automatically in your workspace.
+- [ ] **Portfolio Tracker**: Monitor specific tickers or earnings reports using the `scout_x` mission logic.
 
-## 🔧 Refinement & Polish
-- [ ] **Telegram Topics Migration**: Moving from a single chat to a "Group with Topics" for cleaner routing (Briefings, Alerts, Logs).
-- [ ] **Ollama Model Swap**: Test Mistral or Llama3.2 to see if they follow the "Morpheus" persona better than 3.1:8b.
-- [ ] **Gmail Multi-Account Support**: Extend bridges to handle more than the 'primary' token.
+## 🔧 Maintenance & Safety
+- [ ] **Permission Audit**: Monthly review of file permissions and API key rotation.
+- [ ] **Backup Verification**: Test a full database "Restore" from Google Drive to ensure the `db-backup` skill is 100% reliable.
 
 ---
-*Generated: 2026-02-18*
-*Codebase: github.com/coneborg-byte/memu-bot*
+
+## 🏰 The 2026 Portal Protocol (Secure Sandbox)
+*Goal: Build the Berman CRM Blueprint entirely within the Docker v2026.2.22 sandbox.*
+
+- [x] **Establish Portals**: Mount host `~/openclaw/CRM_Workspace` (Removed Garden Project).
+- [x] **Mission Lane**: Configure OpenClaw to write to `crm/missions` for Antigravity pickup.
+- [x] **Memory Lane**: Configure ingestion from `crm/memory` (memU bot logs).
+- [x] **Automated Distillation**: Build the "Refinery" — a script that distils daily chat logs into single-line Knowledge Items.
+- [x] **Proactive CRM**: Add a cron job that checks "Last Seen" dates and suggests follow-ups via Telegram.
+- [ ] **Voice Synthesis**: Configure the new OpenClaw v2026.2.22 `talk-voice` plugin for spoken alerts.
+- [ ] **HITL Logic**: Add Telegram "Verify/Approve" buttons for all Mission dispatches.
+- [x] **Berman CRM Logic**: Deploy SQLite tracking for contacts and "Last Seen" metrics.
+
+---
+*Last Update: 2026-02-23*

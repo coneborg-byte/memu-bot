@@ -51,5 +51,24 @@
 
 ---
 
+## Phase 5: The "Matthew Berman" Blueprint (Advanced)
+- [ ] **AI Council Framework**: Implement a skill to run multi-agent debates (Risk vs. Growth vs. Security) for user decisions.
+- [ ] **Automated CRM Distillation**: Create a background job that extracts contact details and relationship status from chat logs/emails into `CONTACTS.md`.
+- [ ] **Knowledge RAG 2.0**: Implement automatic ingestion of research reports from `library/` into the vector index.
+- [ ] **Meeting Ingestion**: Pipeline to process local audio/transcripts into the Daily Briefing.
+
+---
+
+## 🔮 Future Vision (Morpheus V3 - Agent Zero & memU)
+**Goal:** Transition to a "Zero-Sync" architecture where Morpheus controls the host directly via local specialists.
+
+1.  **Integrate memU Bot (Host)**: Run memU as a local process feeding a `unified_logs.json` that Morpheus reads via path-link.
+2.  **Add Agent Zero**: Deploy Agent Zero on the host machine. Configure a Morpheus skill to "Dispatch to Agent Zero" for complex local projects.
+3.  **Decommission Antigravity/Missions**: Once Agent Zero is handling local research/scouting, remove the cloud `missions/` bridge.
+
+---
+
 ## Next Steps
-This plan requires **Docker Desktop** to be installed and running. Please confirm installation before proceeding with Phase 1.
+1.  Initialize **AI Council** skill to unlock Berman's "Consultation" use case.
+2.  Connect **memU bot** on the host and link logs to OpenClaw.
+3.  Install **Agent Zero** and test local script execution.

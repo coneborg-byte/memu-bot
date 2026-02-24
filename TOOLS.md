@@ -82,6 +82,16 @@ exec: python3 /root/.openclaw/skills/daily-briefing/briefing.py
 
 ---
 
+## ⏰ Cron — Scheduled Jobs
+
+You have a built-in `cron` tool. **Use it for all scheduling.** Do not look for `crontab` or system-level crons. The OpenClaw scheduler is your only source of truth for jobs.
+
+- **To list jobs:** Call `cron` with `action: "list"`.
+- **To add a job:** Call `cron` with `action: "add"` and the required job details (name, schedule, prompt).
+- **The jobs file:** Is located at `/root/.openclaw/config/cron/jobs.json`. You can also read/edit this file directly if needed, but the `cron` tool is safer.
+
+---
+
 ## 🔧 Environment Notes
 
 - OS: Ubuntu (Docker container)
