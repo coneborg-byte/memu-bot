@@ -17,8 +17,9 @@ Current Focus: **Phase 2 (Deep Intelligence & Personal CRM)**
 - [ ] **Portfolio Tracker**: Monitor specific tickers or earnings reports using the `scout_x` mission logic.
 
 ## 🔧 Maintenance & Safety
-- [ ] **Permission Audit**: Monthly review of file permissions and API key rotation.
-- [ ] **Backup Verification**: Test a full database "Restore" from Google Drive to ensure the `db-backup` skill is 100% reliable.
+- [x] **Permission Audit**: Monthly review of file permissions and API key rotation.
+- [x] **Safety Lockdown**: Google OAuth removed to prevent account suspension/flagging. (Feb 24)
+- [ ] **Backup Verification**: Test a full database "Restore" to ensure the `db-backup` skill is 100% reliable.
 
 ---
 
@@ -35,4 +36,4 @@ Current Focus: **Phase 2 (Deep Intelligence & Personal CRM)**
 - [x] **Berman CRM Logic**: Deploy SQLite tracking for contacts and "Last Seen" metrics.
 
 ---
-*Last Update: 2026-02-23*
+*Last Update: 2026-02-24 (32GB RAM Hardware Upgrade)*

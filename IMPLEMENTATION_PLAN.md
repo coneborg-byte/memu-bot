@@ -1,5 +1,5 @@
 # Hybrid Container Model Implementation Plan
-**Goal:** Run "kinetic" tools (file/command) in Docker while keeping Antigravity on the host for safety and resource management (16GB RAM limit, RTX 4060).
+**Goal:** Run "kinetic" tools (file/command) in Docker while keeping Antigravity on the host for safety and resource management (32GB RAM upgrade, RTX 4060).
 
 **Status:** PENDING
 
